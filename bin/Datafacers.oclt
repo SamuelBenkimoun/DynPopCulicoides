@@ -1,0 +1,62 @@
+// Define datafacer for Shp import: parcels
+datafacer Shp {
+	data Shapefile("data/TRAVAIL/SHAPEFILE/SITES/Sites_culi.shp","EPSG:2975")	// RGR92_UTM_zone_40S
+	match Site {
+		id : "ID_SITE"
+		commune : "site"
+		altitude : "altitude"
+		geom : "geom"
+		kl : "KL"
+		}
+}
+
+// Define datafacer for Shp import: LocStation
+datafacer ShpStation {
+	data Shapefile("data/TRAVAIL/SHAPEFILE/STATIONS/31Stations.shp","EPSG:2975") /// sous reserve d'utiliser les relevés sur les sites
+	match LocStation {
+		name : "NomStation"
+		numero : "Numero"
+		geom : "geom"
+		altitude : "alt"
+		}
+}
+
+// Define datafacer for csv import: temperature and rainfall
+datafacer CsvData {
+  data Csvfile("data/TRAVAIL/CSVDATA/METEO/97401540.csv")
+  match DataStation {
+  	numero : "Numero"
+  	dateTXT : "Date"
+  	tempMin : "Tmin"
+  	tempMax : "Tmax"
+    rainMM : "Rain"
+	}
+}
+
+// Define datafacer for kml export
+datafacer KmlOut {
+	//data KmlExport(outputDir + "/"+region + "_serietemporelle.kml")
+	data KmlExport("output/REUNION_serietemporelle.kml")
+	match Site {
+		geom : "geom"
+	}
+}
+
+// Define datafacer for SHP export : toutes les dates
+datafacer ShpOutAllDates {
+	data Shapefile("output/REUNION_serietemporelle.shp","EPSG:2975")
+	match Site {
+		geom : "geom"
+		id: "ID"
+		commune: "Commune"
+		date_begin: "date_debut"
+		nom_station: "Stat_meteo"
+		eggs : "oeufs"
+		larvae : "larves"
+		pupae : "nymphes"
+		adults : "adultes"
+		adults_ov : "adultes_ov"
+		temperature : "t°"
+		temperature_grad : "t°grad"				
+	}
+}
